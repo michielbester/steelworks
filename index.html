@@ -1,0 +1,1203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Steelworks — Business Plan</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg:       #FFFFFF;
+    --surf:     #F2F2F2;
+    --acc:      #00C4A0;
+    --acc-deep: #008F75;
+    --acc-dim:  rgba(0,196,160,0.1);
+    --acc-line: rgba(0,196,160,0.35);
+    --text:     #0A1628;
+    --muted:    #6B8CAE;
+    --dim:      #B0BECC;
+    --border:   rgba(10,22,40,0.08);
+    --danger:   #E85D4A;
+    --danger-dim: rgba(232,93,74,0.08);
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    font-size: 16px;
+    line-height: 1.6;
+    overflow-x: hidden;
+    position: relative;
+  }
+
+  /* Atmosphere grid */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(0,196,160,0.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(0,196,160,0.04) 1px, transparent 1px);
+    background-size: 48px 48px;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  /* Corner gradients */
+  body::after {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 60% 40% at 100% 0%, rgba(0,196,160,0.08) 0%, transparent 70%),
+      radial-gradient(ellipse 60% 40% at 0% 100%, rgba(10,22,40,0.06) 0%, transparent 70%);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: rgba(255,255,255,0.92);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+    padding: 14px 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .nav-brand {
+    font-family: 'DM Serif Display', serif;
+    font-size: 1.25rem;
+    color: var(--text);
+    letter-spacing: 0.02em;
+  }
+
+  .nav-brand span { color: var(--acc); }
+
+  .nav-tag {
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  /* ── CONTENT WRAPPER ── */
+  .page {
+    position: relative;
+    z-index: 1;
+    max-width: 480px;
+    margin: 0 auto;
+    padding: 0 20px 80px;
+  }
+
+  /* ── SECTION LABEL ── */
+  .section-label {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.26em;
+    text-transform: uppercase;
+    color: var(--acc);
+    margin-bottom: 16px;
+    margin-top: 48px;
+  }
+
+  /* ── HERO ── */
+  .hero {
+    padding: 52px 0 36px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero-ring {
+    position: absolute;
+    top: -40px;
+    right: -60px;
+    width: 220px;
+    height: 220px;
+    border: 1px solid rgba(0,196,160,0.12);
+    border-radius: 50%;
+    pointer-events: none;
+  }
+
+  .hero-ring::before {
+    content: '';
+    position: absolute;
+    inset: 20px;
+    border: 1px solid rgba(0,196,160,0.08);
+    border-radius: 50%;
+  }
+
+  .hero-ring::after {
+    content: '';
+    position: absolute;
+    inset: 40px;
+    border: 1px solid rgba(0,196,160,0.06);
+    border-radius: 50%;
+  }
+
+  .hero-eyebrow {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.26em;
+    text-transform: uppercase;
+    color: var(--acc);
+    margin-bottom: 16px;
+    opacity: 0;
+    animation: fadeUp 0.7s 0.1s cubic-bezier(0.22,1,0.36,1) forwards;
+  }
+
+  .hero h1 {
+    font-family: 'DM Serif Display', serif;
+    font-size: clamp(2.8rem, 12vw, 4.2rem);
+    font-weight: 400;
+    line-height: 1.05;
+    color: var(--text);
+    margin-bottom: 20px;
+    opacity: 0;
+    animation: fadeUp 0.7s 0.2s cubic-bezier(0.22,1,0.36,1) forwards;
+  }
+
+  .hero h1 em {
+    font-style: italic;
+    color: var(--acc);
+  }
+
+  .hero-rule {
+    width: 48px;
+    height: 2px;
+    background: var(--acc);
+    margin-bottom: 20px;
+    opacity: 0;
+    animation: fadeUp 0.7s 0.3s cubic-bezier(0.22,1,0.36,1) forwards;
+  }
+
+  .hero-sub {
+    font-size: 1rem;
+    font-weight: 300;
+    color: var(--muted);
+    line-height: 1.7;
+    max-width: 320px;
+    opacity: 0;
+    animation: fadeUp 0.7s 0.4s cubic-bezier(0.22,1,0.36,1) forwards;
+  }
+
+  /* ── KEY METRICS ROW ── */
+  .metrics-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    margin-top: 32px;
+    opacity: 0;
+    animation: fadeUp 0.7s 0.5s cubic-bezier(0.22,1,0.36,1) forwards;
+  }
+
+  .metric-card {
+    background: var(--surf);
+    border: 1px solid #D0D0D0;
+    border-radius: 8px;
+    box-shadow: 0 2px 12px rgba(10,22,40,0.07);
+    padding: 18px 16px;
+  }
+
+  .metric-card.accent {
+    background: var(--acc);
+    border-color: var(--acc-deep);
+  }
+
+  .metric-card.accent .metric-label,
+  .metric-card.accent .metric-value { color: #fff; }
+
+  .metric-label {
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 8px;
+  }
+
+  .metric-value {
+    font-family: 'DM Serif Display', serif;
+    font-size: 1.8rem;
+    line-height: 1;
+    color: var(--text);
+  }
+
+  .metric-value.lg {
+    font-size: 1.4rem;
+  }
+
+  .metric-sub {
+    font-size: 12px;
+    color: var(--muted);
+    margin-top: 4px;
+    font-weight: 400;
+  }
+
+  .metric-card.accent .metric-sub { color: rgba(255,255,255,0.75); }
+
+  /* ── CARD ── */
+  .card {
+    background: var(--surf);
+    border: 1px solid #D0D0D0;
+    border-radius: 8px;
+    box-shadow: 0 2px 12px rgba(10,22,40,0.07);
+    padding: 20px;
+    margin-bottom: 10px;
+  }
+
+  .card-title {
+    font-family: 'DM Serif Display', serif;
+    font-size: 1.25rem;
+    color: var(--text);
+    margin-bottom: 4px;
+  }
+
+  .card-sub {
+    font-size: 13px;
+    color: var(--muted);
+    margin-bottom: 16px;
+    font-weight: 400;
+  }
+
+  /* ── RECIPE ── */
+  .ingredient {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 12px 0;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .ingredient:last-child { border-bottom: none; }
+
+  .ingredient-name {
+    font-size: 15px;
+    font-weight: 400;
+    color: var(--text);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .ingredient-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--acc);
+    flex-shrink: 0;
+  }
+
+  .ingredient-amount {
+    font-family: 'DM Serif Display', serif;
+    font-size: 1rem;
+    color: var(--acc);
+  }
+
+  /* ── ECONOMICS ── */
+  .econ-bar {
+    margin: 16px 0;
+  }
+
+  .econ-bar-label {
+    display: flex;
+    justify-content: space-between;
+    font-size: 13px;
+    margin-bottom: 6px;
+  }
+
+  .econ-bar-label .lbl { color: var(--muted); font-weight: 400; }
+  .econ-bar-label .val { font-weight: 500; color: var(--text); }
+
+  .econ-bar-track {
+    height: 6px;
+    background: rgba(10,22,40,0.06);
+    border-radius: 3px;
+    overflow: hidden;
+  }
+
+  .econ-bar-fill {
+    height: 100%;
+    border-radius: 3px;
+    background: linear-gradient(90deg, var(--acc), var(--acc-deep));
+  }
+
+  .econ-divider {
+    height: 1px;
+    background: var(--border);
+    margin: 16px 0;
+  }
+
+  .econ-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    padding: 8px 0;
+    font-size: 14px;
+  }
+
+  .econ-row .lbl { color: var(--muted); }
+  .econ-row .val { font-weight: 500; color: var(--text); }
+  .econ-row .val.green { color: var(--acc-deep); }
+  .econ-row .val.big {
+    font-family: 'DM Serif Display', serif;
+    font-size: 1.3rem;
+    color: var(--acc-deep);
+  }
+
+  /* ── STAGES ── */
+  .stage {
+    position: relative;
+    padding-left: 20px;
+    margin-bottom: 10px;
+  }
+
+  .stage::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 20px;
+    bottom: -10px;
+    width: 2px;
+    background: var(--border);
+  }
+
+  .stage:last-child::before { display: none; }
+
+  .stage-dot {
+    position: absolute;
+    left: -5px;
+    top: 20px;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: var(--acc);
+    border: 2px solid var(--bg);
+    box-shadow: 0 0 0 2px var(--acc-line);
+  }
+
+  .stage-card {
+    background: var(--surf);
+    border: 1px solid #D0D0D0;
+    border-radius: 8px;
+    box-shadow: 0 2px 12px rgba(10,22,40,0.07);
+    padding: 18px 18px 14px;
+  }
+
+  .stage-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    margin-bottom: 12px;
+  }
+
+  .stage-num {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--acc);
+    margin-bottom: 2px;
+  }
+
+  .stage-title {
+    font-family: 'DM Serif Display', serif;
+    font-size: 1.1rem;
+    color: var(--text);
+  }
+
+  .stage-badge {
+    font-size: 11px;
+    font-weight: 500;
+    background: var(--acc-dim);
+    color: var(--acc-deep);
+    border: 1px solid var(--acc-line);
+    border-radius: 20px;
+    padding: 3px 10px;
+    white-space: nowrap;
+    margin-left: 8px;
+    margin-top: 2px;
+    flex-shrink: 0;
+  }
+
+  .stage-venue {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 7px 0;
+    border-top: 1px solid var(--border);
+    font-size: 13px;
+  }
+
+  .stage-venue .name { color: var(--text); }
+  .stage-venue .locs { color: var(--muted); font-size: 12px; }
+  .stage-venue .rev { color: var(--acc-deep); font-weight: 500; }
+
+  .stage-total {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    padding-top: 12px;
+    margin-top: 4px;
+    border-top: 1px solid #D0D0D0;
+  }
+
+  .stage-total .lbl { font-size: 12px; color: var(--muted); font-weight: 500; text-transform: uppercase; letter-spacing: 0.1em; }
+  .stage-total .val {
+    font-family: 'DM Serif Display', serif;
+    font-size: 1.2rem;
+    color: var(--text);
+  }
+
+  /* ── CUMULATIVE ── */
+  .cumulative {
+    background: var(--text);
+    border: none;
+    border-radius: 8px;
+    padding: 22px 20px;
+    margin-top: 16px;
+  }
+
+  .cumulative .lbl {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--acc);
+    margin-bottom: 6px;
+  }
+
+  .cumulative .val {
+    font-family: 'DM Serif Display', serif;
+    font-size: 2.4rem;
+    color: #fff;
+    line-height: 1;
+  }
+
+  .cumulative .sub {
+    font-size: 13px;
+    color: rgba(255,255,255,0.5);
+    margin-top: 6px;
+  }
+
+  /* ── PRODUCTION ── */
+  .prod-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+  }
+
+  .prod-item {
+    background: var(--surf);
+    border: 1px solid #D0D0D0;
+    border-radius: 8px;
+    box-shadow: 0 2px 12px rgba(10,22,40,0.07);
+    padding: 16px;
+    text-align: center;
+  }
+
+  .prod-item .val {
+    font-family: 'DM Serif Display', serif;
+    font-size: 1.6rem;
+    color: var(--text);
+    line-height: 1.1;
+    margin-bottom: 4px;
+  }
+
+  .prod-item .lbl {
+    font-size: 12px;
+    color: var(--muted);
+    font-weight: 400;
+  }
+
+  /* ── SALARY CALC ── */
+  .salary-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 0;
+    font-size: 14px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .salary-row:last-child { border-bottom: none; }
+  .salary-row .lbl { color: var(--muted); }
+  .salary-row .val { font-weight: 500; }
+  .salary-row.total .lbl { color: var(--text); font-weight: 600; }
+  .salary-row.total .val { color: var(--acc-deep); font-family: 'DM Serif Display', serif; font-size: 1.2rem; }
+
+  /* ── CONCERNS ── */
+  .concern {
+    background: var(--danger-dim);
+    border: 1px solid rgba(232,93,74,0.2);
+    border-radius: 8px;
+    padding: 16px;
+    margin-bottom: 10px;
+    display: flex;
+    gap: 12px;
+  }
+
+  .concern-icon {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: var(--danger);
+    color: #fff;
+    font-size: 12px;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+
+  .concern-text {
+    font-size: 14px;
+    color: var(--text);
+    line-height: 1.6;
+  }
+
+  /* ── DELIVERY ── */
+  .delivery-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 10px;
+    margin-bottom: 10px;
+  }
+
+  .delivery-item {
+    background: var(--surf);
+    border: 1px solid #D0D0D0;
+    border-radius: 8px;
+    padding: 14px 12px;
+    text-align: center;
+  }
+
+  .delivery-item .val {
+    font-family: 'DM Serif Display', serif;
+    font-size: 1.2rem;
+    color: var(--text);
+    margin-bottom: 4px;
+  }
+
+  .delivery-item .lbl {
+    font-size: 11px;
+    color: var(--muted);
+    line-height: 1.3;
+  }
+
+  /* ── FOOTER ── */
+  footer {
+    position: relative;
+    z-index: 1;
+    text-align: center;
+    padding: 32px 20px 48px;
+    border-top: 1px solid var(--border);
+    font-size: 12px;
+    color: var(--dim);
+  }
+
+  footer strong { color: var(--muted); }
+
+  /* ── ANIMATIONS ── */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  .fade-in {
+    opacity: 0;
+    transform: translateY(16px);
+    transition: opacity 0.6s cubic-bezier(0.22,1,0.36,1), transform 0.6s cubic-bezier(0.22,1,0.36,1);
+  }
+
+  .fade-in.visible {
+    opacity: 1;
+    transform: none;
+  }
+
+  /* ── PROGRESS BAR ── */
+  .progress-bar {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--acc), var(--acc-deep));
+    z-index: 200;
+    transition: width 0.1s;
+  }
+</style>
+</head>
+<body>
+
+<div class="progress-bar" id="progress"></div>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-brand">Steel<span>works</span></div>
+  <div class="nav-tag">Business Plan</div>
+</nav>
+
+<div class="page">
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-ring"></div>
+    <div class="hero-eyebrow">Ready-to-Drink · South Africa</div>
+    <h1>A <em>premium</em><br>RTD built for<br>the fairway.</h1>
+    <div class="hero-rule"></div>
+    <p class="hero-sub">Steelworks — a classic SA mixer reimagined as a craft canned cocktail, targeting premium golf clubs, restaurants, and retail nationwide.</p>
+
+    <div class="metrics-row">
+      <div class="metric-card accent">
+        <div class="metric-label">Year 2 Revenue</div>
+        <div class="metric-value lg">R11.06M</div>
+        <div class="metric-sub">projected · 4 stages</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-label">Profit / Can</div>
+        <div class="metric-value">R9.55</div>
+        <div class="metric-sub">at 42% margin</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-label">RRP</div>
+        <div class="metric-value">R59</div>
+        <div class="metric-sub">per 330ml can</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-label">Target Clubs</div>
+        <div class="metric-value">100</div>
+        <div class="metric-sub">Top SA golf clubs</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- THE RECIPE -->
+  <div class="section-label fade-in">The Recipe</div>
+
+  <div class="card fade-in">
+    <div class="card-title">Classic Steelworks</div>
+    <div class="card-sub">330ml · Signature Formula</div>
+
+    <div class="ingredient">
+      <div class="ingredient-name"><div class="ingredient-dot"></div> Ginger Beer</div>
+      <div class="ingredient-amount">300 ml</div>
+    </div>
+    <div class="ingredient">
+      <div class="ingredient-name"><div class="ingredient-dot"></div> Roses Cola</div>
+      <div class="ingredient-amount">50 ml</div>
+    </div>
+    <div class="ingredient">
+      <div class="ingredient-name"><div class="ingredient-dot"></div> Roses Lime</div>
+      <div class="ingredient-amount">50 ml</div>
+    </div>
+    <div class="ingredient">
+      <div class="ingredient-name"><div class="ingredient-dot"></div> Fresh Lime Juice</div>
+      <div class="ingredient-amount">to taste</div>
+    </div>
+    <div class="ingredient">
+      <div class="ingredient-name"><div class="ingredient-dot"></div> Bitters</div>
+      <div class="ingredient-amount">10 drops</div>
+    </div>
+  </div>
+
+  <!-- UNIT ECONOMICS -->
+  <div class="section-label fade-in">Unit Economics</div>
+
+  <div class="card fade-in">
+    <div class="card-title">Per Can Breakdown</div>
+    <div class="card-sub">Based on 20 golf clubs · 5 cans/day avg</div>
+
+    <div class="econ-row">
+      <span class="lbl">RRP (consumer)</span>
+      <span class="val">R 59.00</span>
+    </div>
+    <div class="econ-row">
+      <span class="lbl">Sell-in (to club)</span>
+      <span class="val">R 23.00</span>
+    </div>
+    <div class="econ-row">
+      <span class="lbl">COGS (excl. delivery)</span>
+      <span class="val">R 10.00</span>
+    </div>
+    <div class="econ-row">
+      <span class="lbl">Distribution cost</span>
+      <span class="val">R 3.45</span>
+    </div>
+    <div class="econ-divider"></div>
+    <div class="econ-row">
+      <span class="lbl">COGS total</span>
+      <span class="val">R 13.45</span>
+    </div>
+    <div class="econ-row">
+      <span class="lbl" style="font-weight:600;color:var(--text)">Net profit / can</span>
+      <span class="val big">R 9.55</span>
+    </div>
+  </div>
+
+  <div class="card fade-in">
+    <div class="card-title">Margin Analysis</div>
+    <div class="card-sub">Target: 40% gross margin minimum</div>
+
+    <div class="econ-bar">
+      <div class="econ-bar-label">
+        <span class="lbl">My Gross Margin</span>
+        <span class="val" style="color:var(--acc-deep)">42%</span>
+      </div>
+      <div class="econ-bar-track">
+        <div class="econ-bar-fill" style="width:42%"></div>
+      </div>
+    </div>
+
+    <div class="econ-bar">
+      <div class="econ-bar-label">
+        <span class="lbl">Club Gross Margin</span>
+        <span class="val" style="color:var(--acc-deep)">61%</span>
+      </div>
+      <div class="econ-bar-track">
+        <div class="econ-bar-fill" style="width:61%"></div>
+      </div>
+    </div>
+
+    <div class="econ-bar">
+      <div class="econ-bar-label">
+        <span class="lbl">My Markup</span>
+        <span class="val" style="color:var(--acc-deep)">71%</span>
+      </div>
+      <div class="econ-bar-track">
+        <div class="econ-bar-fill" style="width:71%"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card fade-in">
+    <div class="card-title">Monthly Revenue (Cluster 1)</div>
+    <div class="card-sub">20 clubs · 150 cans/month each</div>
+
+    <div class="econ-row">
+      <span class="lbl">Cans per day</span>
+      <span class="val">100</span>
+    </div>
+    <div class="econ-row">
+      <span class="lbl">Cans per month</span>
+      <span class="val">3,000</span>
+    </div>
+    <div class="econ-row">
+      <span class="lbl">Revenue per day</span>
+      <span class="val">R 2,300</span>
+    </div>
+    <div class="econ-row">
+      <span class="lbl">Revenue per month</span>
+      <span class="val">R 69,000</span>
+    </div>
+    <div class="econ-row">
+      <span class="lbl">Revenue per year</span>
+      <span class="val">R 828,000</span>
+    </div>
+    <div class="econ-divider"></div>
+    <div class="econ-row">
+      <span class="lbl">Gross profit pm</span>
+      <span class="val">R 28,650</span>
+    </div>
+    <div class="econ-row">
+      <span class="lbl">Net profit pm</span>
+      <span class="val green">R 24,650</span>
+    </div>
+  </div>
+
+  <!-- COST STRUCTURE -->
+  <div class="card fade-in">
+    <div class="card-title">Monthly Expenses</div>
+    <div class="card-sub">Fixed overhead to maintain operations</div>
+    <div class="econ-row">
+      <span class="lbl">Storage</span>
+      <span class="val">R 2,000</span>
+    </div>
+    <div class="econ-row">
+      <span class="lbl">Laptop / admin</span>
+      <span class="val">R 2,000</span>
+    </div>
+    <div class="econ-row">
+      <span class="lbl">Other (est.)</span>
+      <span class="val">R 420</span>
+    </div>
+    <div class="econ-divider"></div>
+    <div class="econ-row">
+      <span class="lbl" style="font-weight:600;color:var(--text)">Total overhead pm</span>
+      <span class="val big">R 4,420</span>
+    </div>
+  </div>
+
+  <!-- ROLLOUT STRATEGY -->
+  <div class="section-label fade-in">Rollout Strategy</div>
+
+  <!-- Stage 1 -->
+  <div class="stage fade-in">
+    <div class="stage-dot"></div>
+    <div class="stage-card">
+      <div class="stage-header">
+        <div>
+          <div class="stage-num">Stage 1</div>
+          <div class="stage-title">Cape Town</div>
+        </div>
+        <div class="stage-badge">Months 1–6</div>
+      </div>
+      <div class="stage-venue">
+        <div>
+          <div class="name">DTC Website</div>
+          <div class="locs">1 location</div>
+        </div>
+        <div class="rev">R 2,760 pm</div>
+      </div>
+      <div class="stage-venue">
+        <div>
+          <div class="name">Premium Golf Clubs</div>
+          <div class="locs">20 locations</div>
+        </div>
+        <div class="rev">R 69,000 pm</div>
+      </div>
+      <div class="stage-venue">
+        <div>
+          <div class="name">Pubs &amp; Restaurants</div>
+          <div class="locs">10 locations</div>
+        </div>
+        <div class="rev">R 11,040 pm</div>
+      </div>
+      <div class="stage-total">
+        <div class="lbl">31 locations · py revenue</div>
+        <div class="val">R 993,600</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Stage 2 -->
+  <div class="stage fade-in">
+    <div class="stage-dot"></div>
+    <div class="stage-card">
+      <div class="stage-header">
+        <div>
+          <div class="stage-num">Stage 2</div>
+          <div class="stage-title">Jozi &amp; Pretoria</div>
+        </div>
+        <div class="stage-badge">Months 7–12</div>
+      </div>
+      <div class="stage-venue">
+        <div>
+          <div class="name">JHB Premium Golf Clubs</div>
+          <div class="locs">20 locations</div>
+        </div>
+        <div class="rev">R 77,280 pm</div>
+      </div>
+      <div class="stage-venue">
+        <div>
+          <div class="name">PTA Premium Golf Clubs</div>
+          <div class="locs">20 locations</div>
+        </div>
+        <div class="rev">R 77,280 pm</div>
+      </div>
+      <div class="stage-venue">
+        <div>
+          <div class="name">JHB Pubs &amp; Restaurants</div>
+          <div class="locs">10 locations</div>
+        </div>
+        <div class="rev">R 11,040 pm</div>
+      </div>
+      <div class="stage-venue">
+        <div>
+          <div class="name">PTA Pubs &amp; Restaurants</div>
+          <div class="locs">10 locations</div>
+        </div>
+        <div class="rev">R 11,040 pm</div>
+      </div>
+      <div class="stage-total">
+        <div class="lbl">60 locations · py revenue</div>
+        <div class="val">R 2.12M</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Stage 3 -->
+  <div class="stage fade-in">
+    <div class="stage-dot"></div>
+    <div class="stage-card">
+      <div class="stage-header">
+        <div>
+          <div class="stage-num">Stage 3</div>
+          <div class="stage-title">National</div>
+        </div>
+        <div class="stage-badge">Months 13–18</div>
+      </div>
+      <div class="stage-venue">
+        <div>
+          <div class="name">Remaining Premium GCs</div>
+          <div class="locs">40 locations</div>
+        </div>
+        <div class="rev">R 154,560 pm</div>
+      </div>
+      <div class="stage-venue">
+        <div>
+          <div class="name">Padel Clubs</div>
+          <div class="locs">20 locations</div>
+        </div>
+        <div class="rev">R 22,080 pm</div>
+      </div>
+      <div class="stage-venue">
+        <div>
+          <div class="name">Pubs &amp; Restaurants</div>
+          <div class="locs">20 locations</div>
+        </div>
+        <div class="rev">R 22,080 pm</div>
+      </div>
+      <div class="stage-venue">
+        <div>
+          <div class="name">Liquor Stores</div>
+          <div class="locs">20 locations</div>
+        </div>
+        <div class="rev">R 22,080 pm</div>
+      </div>
+      <div class="stage-venue">
+        <div>
+          <div class="name">Takealot</div>
+          <div class="locs">1 location</div>
+        </div>
+        <div class="rev">R 5,520 pm</div>
+      </div>
+      <div class="stage-venue">
+        <div>
+          <div class="name">Events</div>
+          <div class="locs">1 location</div>
+        </div>
+        <div class="rev">R 22,080 pm</div>
+      </div>
+      <div class="stage-total">
+        <div class="lbl">102 locations · py revenue</div>
+        <div class="val">R 2.98M</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Stage 4 -->
+  <div class="stage fade-in">
+    <div class="stage-dot"></div>
+    <div class="stage-card">
+      <div class="stage-header">
+        <div>
+          <div class="stage-num">Stage 4</div>
+          <div class="stage-title">Retail National</div>
+        </div>
+        <div class="stage-badge">Months 19–24</div>
+      </div>
+      <div class="stage-venue">
+        <div>
+          <div class="name">Checkers</div>
+          <div class="locs">50 locations</div>
+        </div>
+        <div class="rev">R 138,000 pm</div>
+      </div>
+      <div class="stage-venue">
+        <div>
+          <div class="name">SPAR &amp; Tops</div>
+          <div class="locs">100 locations</div>
+        </div>
+        <div class="rev">R 276,000 pm</div>
+      </div>
+      <div class="stage-total">
+        <div class="lbl">150 locations · py revenue</div>
+        <div class="val">R 4.97M</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Cumulative total -->
+  <div class="cumulative fade-in">
+    <div class="lbl">Total Projected Revenue</div>
+    <div class="val">R 11,062,080</div>
+    <div class="sub">Across all 4 stages · 2-year plan</div>
+  </div>
+
+  <!-- PRODUCTION -->
+  <div class="section-label fade-in">Production</div>
+
+  <div class="prod-grid fade-in">
+    <div class="prod-item">
+      <div class="val">4M</div>
+      <div class="lbl">ml MOQ</div>
+    </div>
+    <div class="prod-item">
+      <div class="val">330ml</div>
+      <div class="lbl">Can size</div>
+    </div>
+    <div class="prod-item">
+      <div class="val">12,121</div>
+      <div class="lbl">Cans (MOQ)</div>
+    </div>
+    <div class="prod-item">
+      <div class="val" style="font-size:1.2rem">R121,212</div>
+      <div class="lbl">First run cost</div>
+    </div>
+  </div>
+
+  <!-- DELIVERY -->
+  <div class="section-label fade-in">Own Local Delivery</div>
+
+  <div class="delivery-grid fade-in">
+    <div class="delivery-item">
+      <div class="val">200 km</div>
+      <div class="lbl">per run</div>
+    </div>
+    <div class="delivery-item">
+      <div class="val">8 hrs</div>
+      <div class="lbl">per run</div>
+    </div>
+    <div class="delivery-item">
+      <div class="val">4×</div>
+      <div class="lbl">runs / month</div>
+    </div>
+  </div>
+
+  <div class="card fade-in">
+    <div class="card-title">Monthly Delivery Cost</div>
+    <div class="card-sub">Own vehicle · 4 runs · 200km each</div>
+
+    <div class="econ-row">
+      <span class="lbl">Driver time (R100/hr)</span>
+      <span class="val">R 3,200</span>
+    </div>
+    <div class="econ-row">
+      <span class="lbl">Fuel (12L/100km · R30/L)</span>
+      <span class="val">R 2,880</span>
+    </div>
+    <div class="econ-divider"></div>
+    <div class="econ-row">
+      <span class="lbl">Total pm</span>
+      <span class="val">R 6,080</span>
+    </div>
+    <div class="econ-row">
+      <span class="lbl">Cost per can</span>
+      <span class="val green">R 1.27</span>
+    </div>
+    <div style="font-size:12px;color:var(--muted);margin-top:8px;">Excludes vehicle wear &amp; tear. At scale, a distribution partner is recommended.</div>
+  </div>
+
+  <!-- SALARY BREAKEVEN -->
+  <div class="section-label fade-in">Salary Breakeven</div>
+
+  <div class="card fade-in">
+    <div class="card-title">What does R30k take?</div>
+    <div class="card-sub">Minimum cans to cover a R30,000 salary</div>
+
+    <div class="salary-row">
+      <span class="lbl">Cases needed pm</span>
+      <span class="val">150 cases</span>
+    </div>
+    <div class="salary-row">
+      <span class="lbl">Cans needed pm</span>
+      <span class="val">3,600 cans</span>
+    </div>
+    <div class="salary-row">
+      <span class="lbl">Cans per day</span>
+      <span class="val">120 cans</span>
+    </div>
+    <div class="econ-divider"></div>
+    <div class="salary-row">
+      <span class="lbl">Revenue pm</span>
+      <span class="val">R 82,800</span>
+    </div>
+    <div class="salary-row">
+      <span class="lbl">COGS</span>
+      <span class="val">− R 48,420</span>
+    </div>
+    <div class="salary-row">
+      <span class="lbl">Storage</span>
+      <span class="val">− R 2,000</span>
+    </div>
+    <div class="salary-row">
+      <span class="lbl">Marketing (10 cases/mo)</span>
+      <span class="val">− R 3,840</span>
+    </div>
+    <div class="salary-row">
+      <span class="lbl">Admin</span>
+      <span class="val">− R 5,000</span>
+    </div>
+    <div class="econ-divider"></div>
+    <div class="salary-row total">
+      <span class="lbl">Net profit (salary)</span>
+      <span class="val">R 23,540 pm</span>
+    </div>
+  </div>
+
+  <div class="card fade-in" style="background:var(--acc-dim);border-color:var(--acc-line)">
+    <div style="font-family:'DM Serif Display',serif;font-size:1.1rem;color:var(--text);margin-bottom:8px;font-style:italic;">"At this point you've built a R1,000,000 brand — 100% owned."</div>
+    <div style="font-size:13px;color:var(--muted);line-height:1.7;">Giving away 80% equity to reach a R10M valuation still leaves your 20% worth R2,000,000 — a strong basis for a first funding round.</div>
+  </div>
+
+  <!-- KEY RISKS -->
+  <div class="section-label fade-in">Key Risks</div>
+
+  <div class="concern fade-in">
+    <div class="concern-icon">!</div>
+    <div class="concern-text"><strong>Production cost ceiling.</strong> COGS must stay below R10/can to maintain the 40% minimum margin. Any supplier price increase directly compresses profitability.</div>
+  </div>
+
+  <div class="concern fade-in">
+    <div class="concern-icon">!</div>
+    <div class="concern-text"><strong>Daily delivery complexity.</strong> Golf clubs prefer frequent top-ups (multiple POS points, cold stock). Own delivery at scale is expensive — a distribution partner will likely be required from day one.</div>
+  </div>
+
+  <div class="concern fade-in">
+    <div class="concern-icon">!</div>
+    <div class="concern-text"><strong>Recipe loyalty risk.</strong> Each club currently has its own Steelworks recipe — this could be a moat (unique to each course) or a barrier. Changing an existing club's recipe risks alienating 10-year loyalists and damaging the club's guest experience.</div>
+  </div>
+
+  <div class="concern fade-in">
+    <div class="concern-icon">!</div>
+    <div class="concern-text"><strong>Cannibalization, not new demand.</strong> Steelworks is a known SKU at golf clubs. Converting from the house-made version to a canned product may not add a net new sale — it replaces an existing drink and shifts margin risk to the club.</div>
+  </div>
+
+</div><!-- /page -->
+
+<footer>
+  <strong>Steelworks</strong> — Business Plan · Confidential<br>
+  Michiel Bester · 2026
+</footer>
+
+<script>
+  // Scroll progress bar
+  window.addEventListener('scroll', () => {
+    const scrolled = window.scrollY;
+    const total = document.documentElement.scrollHeight - window.innerHeight;
+    const pct = Math.min(100, (scrolled / total) * 100);
+    document.getElementById('progress').style.width = pct + '%';
+  });
+
+  // Intersection observer for fade-in
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry, i) => {
+      if (entry.isIntersecting) {
+        entry.target.style.transitionDelay = '0ms';
+        entry.target.classList.add('visible');
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+
+  document.querySelectorAll('.fade-in').forEach((el, i) => {
+    observer.observe(el);
+  });
+</script>
+</body>
+</html>
